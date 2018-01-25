@@ -18,6 +18,7 @@ const cleanups = {
 
   // remove fill
   fill: / +fill=\"(none|#[0-9a-f]+)\"/gi,
+  stroke: / +stroke=\"(none|#[0-9a-f]+)\"/gi,
 
   // Sketch.app shit
   sketchMSShapeGroup: / +sketch:type=\"MSShapeGroup\"/gi,
@@ -33,6 +34,7 @@ class SVGInline extends Component {
       component,
       svg,
       fill,
+      stroke,
       width,
       accessibilityLabel,
       accessibilityDesc,
@@ -88,6 +90,11 @@ class SVGInline extends Component {
         : ""
       ) +
       (
+        stroke
+        ? ` stroke="${ stroke }"`
+        : ""
+      ) +
+      (
         width || height
         ? " style=\"" +
             (width ? `width: ${width};` : "") +
@@ -138,6 +145,7 @@ SVGInline.propTypes = {
   ]),
   svg: PropTypes.string.isRequired,
   fill: PropTypes.string,
+  stroke: PropTypes.string,
   cleanup: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.array,
